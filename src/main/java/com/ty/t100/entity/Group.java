@@ -1,0 +1,36 @@
+package com.ty.t100.entity;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import java.io.Serializable;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+
+/**
+ * <p>
+ * 组
+ * </p>
+ *
+ * @author tang
+ * @since 2020-09-15
+ */
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
+public class Group implements Serializable {
+
+
+    /**
+     * ID
+     */
+    @TableId(value = "id", type = IdType.INPUT)
+    private String id;
+
+    /**
+     * 名称
+     */
+    private String name;
+
+
+}
