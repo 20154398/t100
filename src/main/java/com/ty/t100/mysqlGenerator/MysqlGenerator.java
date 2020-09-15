@@ -93,7 +93,13 @@ public class MysqlGenerator {
         });
         cfg.setFileOutConfigList(focList);
         mpg.setCfg(cfg);
-        mpg.setTemplate(new TemplateConfig().setXml(null));
+
+        // 配置模板
+        TemplateConfig tc = new TemplateConfig();
+        tc.setController("templates/controller.java");// /templates/entity.java 模板路径配置，默认再templates
+        tc.setEntity("templates/entity.java");
+        tc.setXml("");
+        mpg.setTemplate(tc);
 
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();

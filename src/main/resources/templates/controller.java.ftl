@@ -9,7 +9,12 @@ import org.springframework.web.bind.annotation.*;
 <#if superControllerClassPackage??>
 import ${superControllerClassPackage};
 </#if>
-import javax.validation.constraints.NotEmpty;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+
 
 /**
  * <p>
@@ -22,6 +27,7 @@ import javax.validation.constraints.NotEmpty;
 
 @RestController
 @RequestMapping("/<#if controllerMappingHyphenStyle??>${controllerMappingHyphen}<#else>${table.entityPath}</#if>")
+@Api(value = "API - ${table.controllerName}", description = "${table.comment!}")
 <#if kotlin>
 class ${table.controllerName}<#if superControllerClass??> : ${superControllerClass}()</#if>
 <#else>

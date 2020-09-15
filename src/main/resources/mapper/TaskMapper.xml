@@ -12,4 +12,16 @@
         <result column="publisher_id" property="publisherId" />
     </resultMap>
 
+    <select id="listByUserId" parameterType="String" resultMap="BaseResultMap">
+        select
+            task.id as id,
+            task.title as title,
+            task.context as context,
+            task.audio as audio,
+            task.isVideo as isVideo,
+            task.publisher_id as publisher_id
+        from task_user taskUser
+        left join task task on taskUser.task_id = task.id
+        where taskUser.user_id = #{userId}
+    </select>
 </mapper>

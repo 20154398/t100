@@ -1,7 +1,7 @@
 server:
-    port: 8080
+    port: 9000
     servlet:
-        context-path: /springBootDemo
+        context-path: /t100
 spring:
     # ≈‰÷√ ˝æ›‘¥
     datasource:

@@ -2,6 +2,9 @@ package com.ty.t100.service;
 
 import com.ty.t100.entity.TaskUser;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ty.t100.exception.BusinessException;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface TaskUserService extends IService<TaskUser> {
 
+    void insertTask(String taskId, List<String> observer);
 }

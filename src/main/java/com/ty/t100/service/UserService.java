@@ -2,6 +2,7 @@ package com.ty.t100.service;
 
 import com.ty.t100.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ty.t100.vo.Result;
 
 /**
  * <p>
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface UserService extends IService<User> {
 
+    Result login(String code);
 }

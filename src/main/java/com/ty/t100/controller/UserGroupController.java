@@ -6,7 +6,12 @@ import com.ty.t100.entity.UserGroup;
 import com.ty.t100.service.UserGroupService;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.NotEmpty;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+
 
 /**
  * <p>
@@ -19,6 +24,7 @@ import javax.validation.constraints.NotEmpty;
 
 @RestController
 @RequestMapping("/user-group")
+@Api(value = "API - UserGroupController", description = "组用户关联表")
 public class UserGroupController {
 
     private final UserGroupService userGroupService;

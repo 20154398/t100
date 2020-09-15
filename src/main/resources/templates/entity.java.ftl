@@ -3,10 +3,8 @@ package ${package.Entity};
 <#list table.importPackages as pkg>
 import ${pkg};
 </#list>
-<#if swagger2>
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-</#if>
 <#if entityLombokModel>
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -33,9 +31,7 @@ import lombok.experimental.Accessors;
 <#if table.convert>
 @TableName("${table.name}")
 </#if>
-<#if swagger2>
 @ApiModel(value = "${entity}对象", description = "${table.comment!}")
-</#if>
 <#if superEntityClass??>
 public class ${entity} extends ${superEntityClass}<#if activeRecord><${entity}></#if> {
 <#elseif activeRecord>
@@ -51,13 +47,10 @@ public class ${entity} implements Serializable {
     </#if>
 
     <#if field.comment!?length gt 0>
-        <#if swagger2>
     @ApiModelProperty(value = "${field.comment}")
-        <#else>
     /**
      * ${field.comment}
      */
-        </#if>
     </#if>
     <#if field.keyFlag>
         <#-- 主键 -->

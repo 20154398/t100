@@ -6,7 +6,12 @@ import com.ty.t100.entity.TaskUser;
 import com.ty.t100.service.TaskUserService;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.NotEmpty;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+
 
 /**
  * <p>
@@ -19,6 +24,7 @@ import javax.validation.constraints.NotEmpty;
 
 @RestController
 @RequestMapping("/task-user")
+@Api(value = "API - TaskUserController", description = "任务用户关联表")
 public class TaskUserController {
 
     private final TaskUserService taskUserService;
