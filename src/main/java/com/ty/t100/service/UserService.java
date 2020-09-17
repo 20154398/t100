@@ -3,6 +3,7 @@ package com.ty.t100.service;
 import com.ty.t100.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ty.t100.vo.Result;
+import com.ty.t100.vo.UserVo;
 
 /**
  * <p>
@@ -14,5 +15,5 @@ import com.ty.t100.vo.Result;
  */
 public interface UserService extends IService<User> {
 
-    Result login(String code);
+    UserVo login(String code);
 }

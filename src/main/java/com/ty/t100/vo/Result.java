@@ -10,6 +10,12 @@ public class Result {
 
     private String message;
 
+    public Result(Object data){
+        this.code = 200;
+        this.data = data;
+        this.message = "success";
+    }
+
     public Result(Integer code, Object data, String message) {
         this.code = code;
         this.data = data;

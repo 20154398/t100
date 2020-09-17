@@ -41,7 +41,7 @@ public class UserController {
     @ApiOperation(value = "用户登录", notes = "")
     @ApiImplicitParam(name="code", value="code", required=true, paramType="path", dataType="String")
     @PutMapping("/login/{code}")
-    public Result login(@PathVariable("code") String code) {
+    public UserVo login(@PathVariable("code") String code) {
         return userService.login(code);
     }
 }

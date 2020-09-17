@@ -69,7 +69,7 @@ public class TaskController {
             @ApiImplicitParam(name = "page", value = "第几页", required = false, paramType = "query", dataType = "int"),
             @ApiImplicitParam(name = "pageSize", value = "每页多少条", required = false, paramType = "query", dataType = "int")
     })
-    public Result list(String userId, Integer page, Integer pageSize) {
-        return Result.success(taskService.list(userId, page, pageSize));
+    public List<Task> list(String userId, Integer page, Integer pageSize) {
+        return taskService.list(userId, page, pageSize);
     }
 }
