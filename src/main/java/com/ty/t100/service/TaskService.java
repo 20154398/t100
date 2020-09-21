@@ -19,4 +19,6 @@ public interface TaskService extends IService<Task> {
     void insertTask(Task task) throws BusinessException;
 
     List<Task> list(String userId, Integer page, Integer pageSize) throws BusinessException;
+
+    List<Task> listPublisher(String userId, Integer page, Integer pageSize);
 }

@@ -58,7 +58,12 @@ public class TaskController {
             @ApiImplicitParam(name = "observer", value = "接受者", required = true, paramType = "query", dataType = "String")
     })
     @Transactional
-    public Result insertTask(String title, String context, String audio, Integer isVideo, String publisher, @RequestParam(value = "observer") String observers) {
+    public Result insertTask(@RequestParam(value = "title") String title,
+                             @RequestParam(value = "context") String context,
+                             @RequestParam(value = "audio") String audio,
+                             @RequestParam(value = "isVideo") Integer isVideo,
+                             @RequestParam(value = "publisher") String publisher,
+                             @RequestParam(value = "observer") String observers) {
         if (Utils.getInstance().isNull(publisher)) {
             throw new BusinessException("没有发布者");
         }
@@ -76,10 +81,11 @@ public class TaskController {
     @GetMapping("/task")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", value = "用户id", required = true, paramType = "query", dataType = "String"),
-            @ApiImplicitParam(name = "page", value = "第几页", required = false, paramType = "query", dataType = "int"),
-            @ApiImplicitParam(name = "pageSize", value = "每页多少条", required = false, paramType = "query", dataType = "int")
+            @ApiImplicitParam(name = "page", value = "第几页", required = true, paramType = "query", dataType = "int"),
+            @ApiImplicitParam(name = "pageSize", value = "每页多少条", required = true, paramType = "query", dataType = "int"),
+            @ApiImplicitParam(name = "power", value = "权限", required = true, paramType = "query", dataType = "int")
     })
-    public List<Task> list(String userId, Integer page, Integer pageSize) {
-        return taskService.list(userId, page, pageSize);
+    public List<Task> list(String userId, Integer page, Integer pageSize, Integer power) {
+        return power == 1 ? taskService.list(userId, page, pageSize) : taskService.listPublisher(userId, page, pageSize);
     }
 }
