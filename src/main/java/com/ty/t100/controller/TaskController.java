@@ -53,12 +53,12 @@ public class TaskController {
             @ApiImplicitParam(name = "title", value = "标题", required = true, paramType = "query", dataType = "String"),
             @ApiImplicitParam(name = "context", value = "正文", required = false, paramType = "query", dataType = "String"),
             @ApiImplicitParam(name = "audio", value = "音视频", required = false, paramType = "query", dataType = "String"),
-            @ApiImplicitParam(name = "isVideo", value = "音频还是视频", required = false, paramType = "query", dataType = "Boolean"),
+            @ApiImplicitParam(name = "isVideo", value = "音频还是视频", required = false, paramType = "query", dataType = "Integer"),
             @ApiImplicitParam(name = "publisher", value = "发布者", required = true, paramType = "query", dataType = "String"),
             @ApiImplicitParam(name = "observer", value = "接受者", required = true, paramType = "query", dataType = "String")
     })
     @Transactional
-    public Result insertTask(String title, String context, String audio, Boolean isVideo, String publisher, @RequestParam(value = "observer") String observers) {
+    public Result insertTask(String title, String context, String audio, Integer isVideo, String publisher, @RequestParam(value = "observer") String observers) {
         if (Utils.getInstance().isNull(publisher)) {
             throw new BusinessException("没有发布者");
         }
@@ -67,7 +67,7 @@ public class TaskController {
         }
         Task task = new Task();
         String taskId = UUIDUtils.getInstance().getUUID();
-        task.setId(taskId).setTitle(title).setAudio(audio).setIsVideo(isVideo ? 1 : 0).setPublisherId(publisher).setContext(context);
+        task.setId(taskId).setTitle(title).setAudio(audio).setIsVideo(isVideo).setPublisherId(publisher).setContext(context);
         taskService.insertTask(task);
         taskUserService.insertTask(taskId, Stream.of(observers.split(",")).collect(Collectors.toList()));
         return Result.success();
