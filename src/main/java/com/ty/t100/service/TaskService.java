@@ -16,7 +16,7 @@ import java.util.List;
  */
 public interface TaskService extends IService<Task> {
 
-    void insertTask(Task task, List<String> observer) throws BusinessException;
+    void insertTask(Task task) throws BusinessException;
 
     List<Task> list(String userId, Integer page, Integer pageSize) throws BusinessException;
 }

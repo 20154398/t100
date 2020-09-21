@@ -29,7 +29,7 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements Ta
     private TaskMapper taskMapper;
 
     @Override
-    public void insertTask(Task task, List<String> observer) throws BusinessException {
+    public void insertTask(Task task) throws BusinessException {
         try {
             save(task);
         } catch (Exception e) {
