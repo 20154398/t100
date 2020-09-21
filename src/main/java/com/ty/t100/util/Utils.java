@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class Utils {
     public String getFileUrl(HttpServletRequest request, String userId, String fileName) {
-        return String.format("http://%s/%d/%s/file/%s/%s", request.getServerName(), request.getServerPort(), request.getContextPath(), userId, fileName);
+        return String.format("http://%s:%d/%s/file/%s/%s", request.getServerName(), request.getServerPort(), request.getContextPath(), userId, fileName);
     }
 
     private static class SingletonHolder {
