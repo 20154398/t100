@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Objects;
 
 public class Utils {
-    public static String getFileUrl(HttpServletRequest request, String userId, String fileName) {
+    public String getFileUrl(HttpServletRequest request, String userId, String fileName) {
         return String.format("http://%s/%d/%s/file/%s/%s", request.getServerName(), request.getServerPort(), request.getContextPath(), userId, fileName);
     }
 
