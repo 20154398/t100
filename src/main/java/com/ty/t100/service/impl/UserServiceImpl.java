@@ -12,6 +12,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ty.t100.util.OkHttpCli;
 import com.ty.t100.util.UUIDUtils;
 import com.ty.t100.vo.UserVo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,7 @@ import java.util.Objects;
  * @since 2020-09-15
  */
 @Service
+@Slf4j
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
     @Autowired
@@ -45,6 +47,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         requestUrlParam.put("js_code", code);    //小程序调用wx.login返回的code
         requestUrlParam.put("grant_type", "authorization_code");    //默认参数
         JSONObject jsonObject = JSON.parseObject(okHttpCli.doGet("https://api.weixin.qq.com/sns/jscode2session", requestUrlParam));
+        if (Objects.isNull(jsonObject)) {
+            throw new BusinessException(String.format("获取jsonObject失败,Code:%s", code));
+        }
         if (Objects.isNull(jsonObject.get("openid"))) {
             throw new BusinessException(String.format("获取openId失败,errCode:%s,errMsg:%s", jsonObject.get("errcode"), jsonObject.get("errmsg")));
         }
@@ -52,15 +57,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.eq("code", openId);
         User user = getOne(queryWrapper);
+        String id = "";
         if (Objects.isNull(user)) {
             try {
-                String id = UUIDUtils.getInstance().getUUID();
+                id = UUIDUtils.getInstance().getUUID();
                 user = new User().setCode(openId).setId(id).setPower(0);
                 save(user);
             } catch (Exception e) {
                 throw new BusinessException("新增用户失败");
             }
         }
+        log.info(String.format("登陆成功，code:%s,id:%s", code, id));
         return new UserVo(user);
     }
 }
