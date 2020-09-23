@@ -39,7 +39,7 @@ CREATE TABLE `task`
 (
     `id`   varchar(32) not null COMMENT 'ID',
     `title` varchar(32) DEFAULT null COMMENT '标题',
-    `context` varchar(500) DEFAULT null COMMENT '正文',
+    `context` varchar(2000) DEFAULT null COMMENT '正文',
     `audio` varchar(500) DEFAULT null COMMENT '视频或文件的url',
     `isVideo` int DEFAULT null COMMENT '区分视频和文件',
     `publisher_id` varchar(32) DEFAULT null COMMENT '任务发布者id',

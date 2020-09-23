@@ -6,11 +6,13 @@ import com.ty.t100.entity.Task;
 import com.ty.t100.exception.BusinessException;
 import com.ty.t100.service.TaskService;
 import com.ty.t100.service.TaskUserService;
+import com.ty.t100.util.OptionalHelp;
 import com.ty.t100.util.UUIDUtils;
 import com.ty.t100.util.Utils;
 import com.ty.t100.vo.Result;
 import freemarker.template.utility.StringUtil;
 import io.swagger.models.auth.In;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +22,10 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -37,6 +42,7 @@ import java.util.stream.Stream;
 @RestController
 @RequestMapping("/task")
 @Api(value = "API - TaskController", description = "任务")
+@Slf4j
 public class TaskController {
 
     private final TaskService taskService;
@@ -87,5 +93,25 @@ public class TaskController {
     })
     public List<Task> list(String userId, Integer page, Integer pageSize, Integer power) {
         return power == 1 ? taskService.list(userId, page, pageSize) : taskService.listPublisher(userId, page, pageSize);
+    }
+
+    @DeleteMapping("/task/{id}")
+    @ApiImplicitParam(name = "id", value = "任务id", required = true, paramType = "path", dataType = "String")
+    public Result delete(@PathVariable("id") String id, HttpServletRequest request) {
+        Task task = taskService.getById(id);
+        if (Objects.isNull(task)) {
+            throw new BusinessException("没有该任务");
+        }
+        OptionalHelp.ofNullable(task.getAudio())
+                .filter(url -> !Utils.getInstance().isNull(url))
+                .ifPresent(url -> {
+                    String path = Utils.getInstance().getFilePath(request, url);
+                    File file = new File(path);
+                    if (file.exists() && file.delete()) {
+                        log.info("文件删除成功，文件地址:" + path);
+                    }
+                });
+        taskService.removeById(id);
+        return Result.success();
     }
 }

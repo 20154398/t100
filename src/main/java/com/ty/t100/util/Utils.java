@@ -1,11 +1,17 @@
 package com.ty.t100.util;
 
 import javax.servlet.http.HttpServletRequest;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Objects;
 
 public class Utils {
     public String getFileUrl(HttpServletRequest request, String userId, String fileName) {
         return String.format("http://%s:%d/%s/file/%s/%s", request.getServerName(), request.getServerPort(), request.getContextPath(), userId, fileName);
+    }
+
+    public String getFilePath(HttpServletRequest request, String url){
+        return System.getProperty("user.dir") + url.replace(String.format("http://%s:%d/%s", request.getServerName(), request.getServerPort(), request.getContextPath()),"");
     }
 
     private static class SingletonHolder {
