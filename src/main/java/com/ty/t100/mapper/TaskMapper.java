@@ -1,5 +1,6 @@
 package com.ty.t100.mapper;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ty.t100.entity.Task;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -17,5 +18,5 @@ import java.util.List;
  */
 public interface TaskMapper extends BaseMapper<Task> {
 
-    List<Task> listByUserId(Page page, @Param("userId")String userId);
+    Page<Task> listByUserId(Page page, @Param("userId")String userId);
 }

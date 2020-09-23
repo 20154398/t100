@@ -1,5 +1,6 @@
 package com.ty.t100.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ty.t100.entity.Task;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ty.t100.exception.BusinessException;
@@ -18,7 +19,7 @@ public interface TaskService extends IService<Task> {
 
     void insertTask(Task task) throws BusinessException;
 
-    List<Task> list(String userId, Integer page, Integer pageSize) throws BusinessException;
+    Page<Task> list(String userId, Integer page, Integer pageSize) throws BusinessException;
 
-    List<Task> listPublisher(String userId, Integer page, Integer pageSize);
+    Page<Task> listPublisher(String userId, Integer page, Integer pageSize);
 }

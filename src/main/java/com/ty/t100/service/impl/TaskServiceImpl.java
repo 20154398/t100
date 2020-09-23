@@ -42,7 +42,7 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements Ta
     }
 
     @Override
-    public List<Task> list(String userId, Integer page, Integer pageSize) throws BusinessException {
+    public Page<Task> list(String userId, Integer page, Integer pageSize) throws BusinessException {
         Page<Task> taskPage = new Page<>(page, pageSize);
         try {
             return taskMapper.listByUserId(taskPage, userId);
@@ -53,12 +53,12 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements Ta
     }
 
     @Override
-    public List<Task> listPublisher(String userId, Integer page, Integer pageSize) {
+    public Page<Task> listPublisher(String userId, Integer page, Integer pageSize) {
         QueryWrapper<Task> queryWrapper = new QueryWrapper();
         queryWrapper.eq("publisher_id", userId);
         Page<Task> taskPage = new Page<>(page, pageSize);
         try {
-            return page(taskPage, queryWrapper).getRecords();
+            return (Page<Task>) page(taskPage, queryWrapper);
         } catch (Exception e) {
             log.error("根据userid查询任务表失败，", e);
             throw new BusinessException("根据userid查询任务表失败");

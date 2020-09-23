@@ -1,7 +1,7 @@
 package com.ty.t100.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+
 import com.ty.t100.entity.Task;
 import com.ty.t100.exception.BusinessException;
 import com.ty.t100.service.TaskService;
@@ -91,7 +91,7 @@ public class TaskController {
             @ApiImplicitParam(name = "pageSize", value = "每页多少条", required = true, paramType = "query", dataType = "int"),
             @ApiImplicitParam(name = "power", value = "权限", required = true, paramType = "query", dataType = "int")
     })
-    public List<Task> list(String userId, Integer page, Integer pageSize, Integer power) {
+    public IPage<Task> list(String userId, Integer page, Integer pageSize, Integer power) {
         return power == 1 ? taskService.list(userId, page, pageSize) : taskService.listPublisher(userId, page, pageSize);
     }
 
