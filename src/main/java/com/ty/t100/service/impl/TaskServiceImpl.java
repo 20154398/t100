@@ -56,6 +56,7 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements Ta
     public Page<Task> listPublisher(String userId, Integer page, Integer pageSize) {
         QueryWrapper<Task> queryWrapper = new QueryWrapper();
         queryWrapper.eq("publisher_id", userId);
+        queryWrapper.orderByDesc("create_time");
         Page<Task> taskPage = new Page<>(page, pageSize);
         try {
             return (Page<Task>) page(taskPage, queryWrapper);

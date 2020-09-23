@@ -8,6 +8,7 @@ CREATE TABLE `user`
     `name` varchar(32) DEFAULT null COMMENT '名称',
     `power` int(1) default 0 comment '权限',
     `group_id` varchar(32) DEFAULT '1' COMMENT '组id',
+    `create_time` timestamp DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
@@ -43,6 +44,7 @@ CREATE TABLE `task`
     `audio` varchar(500) DEFAULT null COMMENT '视频或文件的url',
     `isVideo` int DEFAULT null COMMENT '区分视频和文件',
     `publisher_id` varchar(32) DEFAULT null COMMENT '任务发布者id',
+    `create_time` timestamp DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8

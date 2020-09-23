@@ -9,6 +9,7 @@
         <result column="name" property="name" />
         <result column="power" property="power" />
         <result column="group_id" property="groupId" />
+        <result column="create_time" property="createTime" />
     </resultMap>
 
 </mapper>

@@ -1,6 +1,7 @@
 package com.ty.t100.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 
@@ -55,6 +56,12 @@ public class User implements Serializable {
      * 组id
      */
     private String groupId;
+
+    @ApiModelProperty(value = "创建时间")
+    /**
+     * 创建时间
+     */
+    private LocalDateTime createTime;
 
 
 }
