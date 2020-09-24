@@ -2,8 +2,11 @@ package com.ty.t100.service;
 
 import com.ty.t100.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ty.t100.vo.GroupVO;
 import com.ty.t100.vo.Result;
 import com.ty.t100.vo.UserVo;
+
+import java.util.List;
 
 /**
  * <p>
@@ -16,4 +19,6 @@ import com.ty.t100.vo.UserVo;
 public interface UserService extends IService<User> {
 
     UserVo login(String code);
+
+    List<GroupVO> selectAll();
 }

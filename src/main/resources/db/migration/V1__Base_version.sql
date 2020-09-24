@@ -26,15 +26,6 @@ CREATE TABLE `group`
 
 insert into `group` value ('1','未分组');
 
-DROP TABLE IF EXISTS `user_group`;
-CREATE TABLE `user_group`
-(
-    `user_id`   varchar(32) not null COMMENT 'ID',
-    `group_id` varchar(32) DEFAULT null COMMENT '名称'
-) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8
-  ROW_FORMAT = DYNAMIC COMMENT ='组用户关联表';
-
 DROP TABLE IF EXISTS `task`;
 CREATE TABLE `task`
 (

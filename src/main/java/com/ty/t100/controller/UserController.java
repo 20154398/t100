@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ty.t100.entity.User;
 import com.ty.t100.service.UserService;
 import com.ty.t100.util.UUIDUtils;
+import com.ty.t100.vo.GroupVO;
 import com.ty.t100.vo.Result;
 import com.ty.t100.vo.UserVo;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
+import java.util.List;
 import java.util.Objects;
 
 
@@ -43,5 +45,11 @@ public class UserController {
     @PutMapping("/login/{code}")
     public UserVo login(@PathVariable("code") String code) {
         return userService.login(code);
+    }
+
+    @ApiOperation(value = "用户查询", notes = "")
+    @GetMapping("/selectAll")
+    public List<GroupVO> selectAll() {
+        return userService.selectAll();
     }
 }

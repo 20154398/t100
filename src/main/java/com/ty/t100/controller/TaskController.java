@@ -99,7 +99,7 @@ public class TaskController {
     @ApiImplicitParam(name = "id", value = "任务id", required = true, paramType = "path", dataType = "String")
     public Result delete(@PathVariable("id") String id, HttpServletRequest request) {
         Task task = taskService.getById(id);
-        if (Objects.isNull(task)) {
+        if (Utils.getInstance().isNull(task)) {
             throw new BusinessException("没有该任务");
         }
         OptionalHelp.ofNullable(task.getAudio())
