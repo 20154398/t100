@@ -12,4 +12,26 @@
         <result column="create_time" property="createTime" />
     </resultMap>
 
+    <resultMap id="Group" type="com.ty.t100.vo.GroupVo">
+        <id column="groupId" property="id"/>
+        <result column="groupName" property="name"/>
+        <collection property="children" javaType="java.util.ArrayList" ofType="com.ty.t100.vo.UserVo">
+            <result column="userId" property="id"/>
+            <result column="userName" property="name"/>
+            <result column="userPower" property="power"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectAll" resultMap="Group">
+        select
+            g.id as groupId,
+            g.name as groupName,
+            u.id as userId,
+            u.name as userName,
+            u.power as userPower
+        from user u
+        left join t100.group g on u.group_id = g.id
+        where u.power = '1'
+    </select>
+
 </mapper>

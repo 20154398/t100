@@ -12,7 +12,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ty.t100.util.OkHttpCli;
 import com.ty.t100.util.UUIDUtils;
 import com.ty.t100.util.Utils;
-import com.ty.t100.vo.GroupVO;
+import com.ty.t100.vo.GroupVo;
 import com.ty.t100.vo.UserVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +41,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Resource
     private AppParameters appParameters;
+
+    @Resource
+    private UserMapper userMapper;
 
     @Override
     public UserVo login(String code) {
@@ -75,7 +78,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public List<GroupVO> selectAll() {
-        return null;
+    public List<GroupVo> selectAll() {
+        return userMapper.selectAll();
     }
 }

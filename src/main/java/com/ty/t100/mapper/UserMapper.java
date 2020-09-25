@@ -2,6 +2,9 @@ package com.ty.t100.mapper;
 
 import com.ty.t100.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.ty.t100.vo.GroupVo;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface UserMapper extends BaseMapper<User> {
 
+    List<GroupVo> selectAll();
 }
