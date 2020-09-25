@@ -34,7 +34,7 @@ public class UserController {
     }
 
     @ApiOperation(value = "用户登录", notes = "")
-    @ApiImplicitParam(name="code", value="code", required=true, paramType="path", dataType="String")
+    @ApiImplicitParam(name = "code", value = "code", required = true, paramType = "path", dataType = "String")
     @PutMapping("/login/{code}")
     public UserVo login(@PathVariable("code") String code) {
         return userService.login(code);
@@ -44,5 +44,11 @@ public class UserController {
     @GetMapping("/selectAll")
     public List<GroupVo> selectAll() {
         return userService.selectAll();
+    }
+
+    @ApiOperation(value = "用户查询根据任务和状态", notes = "")
+    @GetMapping("/selectUser")
+    public List<GroupVo> selectUserByTaskIdAndStatus(Integer status, String taskId) {
+        return userService.selectUserByTaskIdAndStatus(status, taskId);
     }
 }

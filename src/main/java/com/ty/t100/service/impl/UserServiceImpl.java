@@ -81,4 +81,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public List<GroupVo> selectAll() {
         return userMapper.selectAll();
     }
+
+    @Override
+    public List<GroupVo> selectUserByTaskIdAndStatus(Integer status, String taskId) {
+        return userMapper.selectUserByTaskIdAndStatus(status, taskId);
+    }
 }

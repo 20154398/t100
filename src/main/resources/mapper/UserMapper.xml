@@ -34,4 +34,17 @@
         where u.power = '1'
     </select>
 
+    <select id="selectUserByTaskIdAndStatus" resultMap="Group">
+        select
+            g.id as groupId,
+            g.name as groupName,
+            u.id as userId,
+            u.name as userName,
+            u.power as userPower
+        from task_user tu
+        left join user u on u.id = tu.user_id
+        left join t100.group g on u.group_id = g.id
+        where u.power = '1' and tu.task_id = #{taskId} and tu.status = #{status}
+    </select>
+
 </mapper>

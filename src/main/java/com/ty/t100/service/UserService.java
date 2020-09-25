@@ -20,4 +20,6 @@ public interface UserService extends IService<User> {
     UserVo login(String code);
 
     List<GroupVo> selectAll();
+
+    List<GroupVo> selectUserByTaskIdAndStatus(Integer status, String taskId);
 }

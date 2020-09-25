@@ -18,5 +18,5 @@ import java.util.List;
  */
 public interface TaskMapper extends BaseMapper<Task> {
 
-    Page<Task> listByUserId(Page page, @Param("userId")String userId);
+    Page<Task> listByUserId(Page page, @Param("userId") String userId);
 }
