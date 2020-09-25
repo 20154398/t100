@@ -1,8 +1,12 @@
 package com.ty.t100.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 
 import com.ty.t100.entity.Task;
+import com.ty.t100.entity.TaskUser;
 import com.ty.t100.exception.BusinessException;
 import com.ty.t100.service.TaskService;
 import com.ty.t100.service.TaskUserService;
@@ -24,7 +28,9 @@ import io.swagger.annotations.ApiOperation;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -112,6 +118,21 @@ public class TaskController {
                     }
                 });
         taskService.removeById(id);
+        return Result.success();
+    }
+
+    @PostMapping("/finishTask")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "用户id", required = true, paramType = "query", dataType = "String"),
+            @ApiImplicitParam(name = "taskId", value = "任务id", required = true, paramType = "query", dataType = "String"),
+    })
+    public Result finishTask(String userId, String taskId) {
+        Map<String, String> param = new HashMap<>();
+        param.put("user_id", userId);
+        param.put("task_id", taskId);
+        UpdateWrapper<TaskUser> userUpdateWrapper = new UpdateWrapper<>();
+        userUpdateWrapper.allEq(param).set("status", 1);
+        taskUserService.update(userUpdateWrapper);
         return Result.success();
     }
 }
