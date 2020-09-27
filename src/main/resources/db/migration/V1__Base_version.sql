@@ -9,6 +9,7 @@ CREATE TABLE `user`
     `power` int(1) default 0 comment '权限',
     `group_id` varchar(32) DEFAULT '1' COMMENT '组id',
     `create_time` timestamp DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `integral` int default 0 comment '积分',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8

@@ -7,9 +7,11 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 
 import com.ty.t100.entity.Task;
 import com.ty.t100.entity.TaskUser;
+import com.ty.t100.entity.User;
 import com.ty.t100.exception.BusinessException;
 import com.ty.t100.service.TaskService;
 import com.ty.t100.service.TaskUserService;
+import com.ty.t100.service.UserService;
 import com.ty.t100.util.OptionalHelp;
 import com.ty.t100.util.UUIDUtils;
 import com.ty.t100.util.Utils;
@@ -55,9 +57,12 @@ public class TaskController {
 
     private final TaskUserService taskUserService;
 
-    public TaskController(TaskService taskService, TaskUserService taskUserService) {
+    private final UserService userService;
+
+    public TaskController(TaskService taskService, TaskUserService taskUserService, UserService userService) {
         this.taskService = taskService;
         this.taskUserService = taskUserService;
+        this.userService = userService;
     }
 
     @PostMapping("/task")
@@ -127,12 +132,44 @@ public class TaskController {
             @ApiImplicitParam(name = "taskId", value = "任务id", required = true, paramType = "query", dataType = "String"),
     })
     public Result finishTask(String userId, String taskId) {
+        QueryWrapper queryWrapper = new QueryWrapper();
         Map<String, String> param = new HashMap<>();
         param.put("user_id", userId);
         param.put("task_id", taskId);
-        UpdateWrapper<TaskUser> userUpdateWrapper = new UpdateWrapper<>();
-        userUpdateWrapper.allEq(param).set("status", 1);
-        taskUserService.update(userUpdateWrapper);
-        return Result.success();
+        queryWrapper.allEq(param);
+        TaskUser taskUser = taskUserService.getOne(queryWrapper);
+        if (taskUser.getStatus() == 1) {
+            throw new BusinessException("该任务已完成");
+        }
+        taskUser.setStatus(1);
+        return taskUserService.update(taskUser, queryWrapper) ? Result.success() : Result.fail("更新任务状态失败");
+    }
+
+    @PostMapping("/scoring")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "用户id", required = true, paramType = "query", dataType = "String"),
+            @ApiImplicitParam(name = "submitterId", value = "提交者id", required = true, paramType = "query", dataType = "String"),
+            @ApiImplicitParam(name = "taskId", value = "任务id", required = true, paramType = "query", dataType = "String"),
+            @ApiImplicitParam(name = "integral", value = "获得积分", required = true, paramType = "query", dataType = "Integer")
+    })
+    @Transactional
+    public Result scoring(String userId, String submitterId, String taskId, Integer integral) {
+        User user = userService.getById(submitterId);
+        if (user.getPower() != 0) {
+            throw new BusinessException("没有权限打分");
+        }
+        QueryWrapper queryWrapper = new QueryWrapper();
+        Map<String, String> param = new HashMap<>();
+        param.put("user_id", userId);
+        param.put("task_id", taskId);
+        queryWrapper.allEq(param);
+        TaskUser taskUser = taskUserService.getOne(queryWrapper);
+        if (taskUser.getStatus() == 0) {
+            throw new BusinessException("任务未完成");
+        }
+        User observer = userService.getById(userId);
+        observer.setIntegral(observer.getIntegral() + integral);
+        taskUser.setStatus(2);
+        return userService.updateById(observer) && taskUserService.update(taskUser, queryWrapper) ? Result.success() : Result.fail("打分失败");
     }
 }

@@ -63,5 +63,11 @@ public class User implements Serializable {
      */
     private LocalDateTime createTime;
 
+    @ApiModelProperty(value = "积分")
+    /**
+     * 积分
+     */
+    private Integer integral;
+
 
 }
