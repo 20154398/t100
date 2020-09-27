@@ -15,9 +15,12 @@ public class UserVo {
 
     private String name;
 
+    private String nickname;
+
     public UserVo(User user) {
         this.power = user.getPower();
         this.id = user.getId();
         this.name = user.getName();
+        this.nickname = user.getNickname();
     }
 }

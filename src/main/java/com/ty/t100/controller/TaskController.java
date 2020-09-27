@@ -6,9 +6,11 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 
 import com.ty.t100.entity.Task;
+import com.ty.t100.entity.TaskIntegral;
 import com.ty.t100.entity.TaskUser;
 import com.ty.t100.entity.User;
 import com.ty.t100.exception.BusinessException;
+import com.ty.t100.service.TaskIntegralService;
 import com.ty.t100.service.TaskService;
 import com.ty.t100.service.TaskUserService;
 import com.ty.t100.service.UserService;
@@ -59,10 +61,16 @@ public class TaskController {
 
     private final UserService userService;
 
-    public TaskController(TaskService taskService, TaskUserService taskUserService, UserService userService) {
+    private final TaskIntegralService taskIntegralService;
+
+    public TaskController(TaskService taskService,
+                          TaskUserService taskUserService,
+                          UserService userService,
+                          TaskIntegralService taskIntegralService) {
         this.taskService = taskService;
         this.taskUserService = taskUserService;
         this.userService = userService;
+        this.taskIntegralService = taskIntegralService;
     }
 
     @PostMapping("/task")
@@ -170,6 +178,8 @@ public class TaskController {
         User observer = userService.getById(userId);
         observer.setIntegral(observer.getIntegral() + integral);
         taskUser.setStatus(2);
-        return userService.updateById(observer) && taskUserService.update(taskUser, queryWrapper) ? Result.success() : Result.fail("打分失败");
+        TaskIntegral taskIntegral = new TaskIntegral().setIntegral(integral).setTaskId(taskId).setUserId(userId);
+        return userService.updateById(observer) && taskUserService.update(taskUser, queryWrapper) && taskIntegralService.save(taskIntegral) ?
+                Result.success() : Result.fail("打分失败");
     }
 }

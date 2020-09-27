@@ -22,7 +22,6 @@ import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -46,7 +45,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private UserMapper userMapper;
 
     @Override
-    public UserVo login(String code) {
+    public UserVo login(String code, String nickname) {
         Map<String, String> requestUrlParam = new HashMap<>();
         requestUrlParam.put("appid", appParameters.getAppid());    //开发者设置中的appId
         requestUrlParam.put("secret", appParameters.getAddSecret());    //开发者设置中的appSecret
@@ -67,7 +66,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (Utils.getInstance().isNull(user)) {
             try {
                 id = UUIDUtils.getInstance().getUUID();
-                user = new User().setCode(openId).setId(id);
+                user = new User().setCode(openId).setId(id).setNickname(nickname);
                 save(user);
             } catch (Exception e) {
                 throw new BusinessException("新增用户失败");

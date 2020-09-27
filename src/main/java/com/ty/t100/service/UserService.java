@@ -17,7 +17,7 @@ import java.util.List;
  */
 public interface UserService extends IService<User> {
 
-    UserVo login(String code);
+    UserVo login(String code, String nickname);
 
     List<GroupVo> selectAll();
 

@@ -5,7 +5,8 @@ CREATE TABLE `user`
 (
     `id`         varchar(32) not null COMMENT 'ID',
     `code` varchar(32) not null COMMENT '微信code',
-    `name` varchar(32) DEFAULT null COMMENT '名称',
+    `name` varchar(32) DEFAULT null COMMENT '备注',
+    `nickname` varchar(32) not null COMMENT '名称',
     `power` int(1) default 0 comment '权限',
     `group_id` varchar(32) DEFAULT '1' COMMENT '组id',
     `create_time` timestamp DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -46,10 +47,32 @@ DROP TABLE IF EXISTS `task_user`;
 CREATE TABLE `task_user`
 (
     `task_id`   varchar(32) not null COMMENT 'ID',
-    `user_id` varchar(32) DEFAULT null COMMENT '任务接受者id',
+    `user_id` varchar(32) not null COMMENT '任务接受者id',
     `status` int DEFAULT 0 COMMENT '任务完成情况，0-未完成，1-完成未打分，2-完成已打分'
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
   ROW_FORMAT = DYNAMIC COMMENT ='任务用户关联表';
+
+DROP TABLE IF EXISTS `task_integral`;
+CREATE TABLE `task_integral`
+(
+    `create_time` timestamp DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `user_id` varchar(32) not null COMMENT '任务完成者id',
+    `task_id` varchar(32) not null COMMENT '任务id',
+    `integral` int DEFAULT 0 COMMENT '积分流水'
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  ROW_FORMAT = DYNAMIC COMMENT ='任务积分流水表';
+
+DROP TABLE IF EXISTS `commodity_integral`;
+CREATE TABLE `commodity_integral`
+(
+    `create_time` timestamp DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `user_id` varchar(32) not null COMMENT '商品兑换者id',
+    `commodity_id` varchar(32) not null COMMENT '商品id',
+    `integral` int DEFAULT 0 COMMENT '积分流水'
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  ROW_FORMAT = DYNAMIC COMMENT ='任务积分流水表';
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MysqlGenerator {
-    private static final String[] creatTableList = {"user","task"};
+    private static final String[] creatTableList = {"task_integral","commodity_integral"};
 
     /**
      * RUN THIS
