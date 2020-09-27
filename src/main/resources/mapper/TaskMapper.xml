@@ -13,7 +13,18 @@
         <result column="create_time" property="createTime" />
     </resultMap>
 
-    <select id="listByUserId" parameterType="String" resultMap="BaseResultMap">
+    <resultMap id="TaskVo" type="com.ty.t100.vo.TaskVo">
+        <id column="id" property="id" />
+        <result column="title" property="title" />
+        <result column="context" property="context" />
+        <result column="audio" property="audio" />
+        <result column="isVideo" property="isVideo" />
+        <result column="publisher_id" property="publisherId" />
+        <result column="create_time" property="createTime" />
+        <result column="status" property="status" />
+    </resultMap>
+
+    <select id="listByUserId" parameterType="String" resultMap="TaskVo">
         select
             task.id as id,
             task.title as title,
@@ -21,7 +32,8 @@
             task.audio as audio,
             task.isVideo as isVideo,
             task.publisher_id as publisher_id,
-            task.create_time as create_time
+            task.create_time as create_time,
+            taskUser.status as status
         from task_user taskUser
         left join task task on taskUser.task_id = task.id
         where taskUser.user_id = #{userId}
