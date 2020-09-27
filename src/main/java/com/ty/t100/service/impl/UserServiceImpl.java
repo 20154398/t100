@@ -63,7 +63,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.eq("code", openId);
         User user = getOne(queryWrapper);
-        String id = user.getId();
+        String id = "";
         if (Utils.getInstance().isNull(user)) {
             try {
                 id = UUIDUtils.getInstance().getUUID();
