@@ -148,30 +148,30 @@ public class TaskController {
 
     @PostMapping("/scoring")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "userId", value = "用户id", required = true, paramType = "query", dataType = "String"),
-            @ApiImplicitParam(name = "submitterId", value = "提交者id", required = true, paramType = "query", dataType = "String"),
+            @ApiImplicitParam(name = "userId", value = "当前用户id", required = true, paramType = "query", dataType = "String"),
+            @ApiImplicitParam(name = "submitterId", value = "任务接受者id", required = true, paramType = "query", dataType = "String"),
             @ApiImplicitParam(name = "taskId", value = "任务id", required = true, paramType = "query", dataType = "String"),
             @ApiImplicitParam(name = "integral", value = "获得积分", required = true, paramType = "query", dataType = "Integer")
     })
     @Transactional
     public Result scoring(String userId, String submitterId, String taskId, Integer integral) {
-        User user = userService.getById(submitterId);
+        User user = userService.getById(userId);
         if (user.getPower() != 0) {
             throw new BusinessException("没有权限打分");
         }
         QueryWrapper queryWrapper = new QueryWrapper();
         Map<String, String> param = new HashMap<>();
-        param.put("user_id", userId);
+        param.put("user_id", submitterId);
         param.put("task_id", taskId);
         queryWrapper.allEq(param);
         TaskUser taskUser = taskUserService.getOne(queryWrapper);
         if (taskUser.getStatus() == 0) {
             throw new BusinessException("任务未完成");
         }
-        User observer = userService.getById(userId);
+        User observer = userService.getById(submitterId);
         observer.setIntegral(observer.getIntegral() + integral);
         taskUser.setStatus(2);
-        TaskIntegral taskIntegral = new TaskIntegral().setIntegral(integral).setTaskId(taskId).setUserId(userId);
+        TaskIntegral taskIntegral = new TaskIntegral().setIntegral(integral).setTaskId(taskId).setUserId(submitterId);
         return userService.updateById(observer) && taskUserService.update(taskUser, queryWrapper) && taskIntegralService.save(taskIntegral) ?
                 Result.success() : Result.fail("打分失败");
     }

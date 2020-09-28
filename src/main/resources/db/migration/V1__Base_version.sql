@@ -7,7 +7,7 @@ CREATE TABLE `user`
     `code` varchar(32) not null COMMENT '微信code',
     `name` varchar(32) DEFAULT null COMMENT '备注',
     `nickname` varchar(32) not null COMMENT '名称',
-    `power` int(1) default 0 comment '权限',
+    `power` int(1) default 1 comment '权限',
     `group_id` varchar(32) DEFAULT '1' COMMENT '组id',
     `create_time` timestamp DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `integral` int default 0 comment '积分',

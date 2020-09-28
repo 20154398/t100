@@ -66,7 +66,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (Utils.getInstance().isNull(user)) {
             try {
                 id = UUIDUtils.getInstance().getUUID();
-                user = new User().setCode(openId).setId(id).setNickname(nickname);
+                user = new User().setCode(openId).setId(id).setNickname(nickname).setPower(1);
                 save(user);
             } catch (Exception e) {
                 throw new BusinessException("新增用户失败");
