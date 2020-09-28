@@ -1,7 +1,9 @@
 package com.ty.t100.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ty.t100.entity.CommodityIntegral;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ty.t100.vo.IntegralVo;
 
 /**
  * <p>
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface CommodityIntegralService extends IService<CommodityIntegral> {
 
+    Page<IntegralVo> listPageById(String userId, Integer page, Integer pageSize);
 }

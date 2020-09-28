@@ -18,6 +18,7 @@
         <collection property="children" javaType="java.util.ArrayList" ofType="com.ty.t100.vo.UserVo">
             <result column="userId" property="id"/>
             <result column="userName" property="name"/>
+            <result column="userNickname" property="nickname"/>
             <result column="userPower" property="power"/>
         </collection>
     </resultMap>
@@ -28,6 +29,7 @@
             g.name as groupName,
             u.id as userId,
             u.name as userName,
+            u.nickname as userNickname,
             u.power as userPower
         from user u
         left join t100.group g on u.group_id = g.id

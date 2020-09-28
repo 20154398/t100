@@ -1,7 +1,10 @@
 package com.ty.t100.mapper;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ty.t100.entity.CommodityIntegral;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.ty.t100.vo.IntegralVo;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface CommodityIntegralMapper extends BaseMapper<CommodityIntegral> {
 
+    Page<IntegralVo> listPageById(Page<IntegralVo> taskPage, @Param("userId") String userId);
 }

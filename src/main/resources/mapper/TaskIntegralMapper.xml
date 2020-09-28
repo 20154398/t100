@@ -10,4 +10,17 @@
         <result column="integral" property="integral" />
     </resultMap>
 
+    <select id="listPageById" resultType="com.ty.t100.vo.IntegralVo">
+        select
+            ti.create_time as createTime,
+            ti.task_id as taskId,
+            ti.integral as integral,
+            t.title as name,
+            0 as integralType
+        from task_integral ti
+        left join task t on ti.task_id = t.id
+        where ti.user_id = #{userId}
+        order by ti.create_time desc
+    </select>
+
 </mapper>
