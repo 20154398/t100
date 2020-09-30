@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -18,8 +19,12 @@ public class OkHttpCli {
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     private static final MediaType XML = MediaType.parse("application/xml; charset=utf-8");
 
-    @Autowired
-    private OkHttpClient okHttpClient;
+    private OkHttpClient okHttpClient = new OkHttpClient.Builder()
+            .connectTimeout(120, TimeUnit.SECONDS)
+            .readTimeout(120, TimeUnit.SECONDS)
+            .writeTimeout(120, TimeUnit.SECONDS)
+            .retryOnConnectionFailure(true)
+            .build();;
 
     /**
      * get 请求

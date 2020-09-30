@@ -15,25 +15,28 @@
     <resultMap id="Group" type="com.ty.t100.vo.GroupVo">
         <id column="groupId" property="id"/>
         <result column="groupName" property="name"/>
-        <collection property="children" javaType="java.util.ArrayList" ofType="com.ty.t100.vo.UserVo">
-            <result column="userId" property="id"/>
-            <result column="userName" property="name"/>
-            <result column="userNickname" property="nickname"/>
-            <result column="userPower" property="power"/>
-        </collection>
+        <collection property="children" javaType="java.util.ArrayList" column="group_id=groupId" select="getUserList"/>
     </resultMap>
 
     <select id="selectAll" resultMap="Group">
         select
             g.id as groupId,
-            g.name as groupName,
-            u.id as userId,
-            u.name as userName,
-            u.nickname as userNickname,
-            u.power as userPower
-        from user u
-        left join t100.group g on u.group_id = g.id
-        where u.power = '1'
+            g.name as groupName
+        from
+            grouping g
+    </select>
+
+    <select id="getUserList" resultType="com.ty.t100.vo.UserVo">
+        select
+            u.id as id,
+            u.name as name,
+            u.nickname as nickname,
+            u.power as power
+        from
+            user u
+        where
+            u.group_id = #{group_id}
+            and u.power = 1
     </select>
 
     <select id="selectUserByTaskIdAndStatus" resultMap="Group">
@@ -45,7 +48,7 @@
             u.power as userPower
         from task_user tu
         left join user u on u.id = tu.user_id
-        left join t100.group g on u.group_id = g.id
+        left join grouping g on u.group_id = g.id
         where u.power = '1' and tu.task_id = #{taskId} and tu.status = #{status}
     </select>
 

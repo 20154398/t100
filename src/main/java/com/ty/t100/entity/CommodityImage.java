@@ -3,7 +3,6 @@ package com.ty.t100.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -12,31 +11,37 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 组
+ * 商品图片对应表
  * </p>
  *
  * @author tang
- * @since 2020-09-15
+ * @since 2020-09-30
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value = "Group对象", description = "组")
-public class Group implements Serializable {
+@ApiModel(value = "CommodityImage对象", description = "商品图片对应表")
+public class CommodityImage implements Serializable {
 
 
     @ApiModelProperty(value = "ID")
     /**
      * ID
      */
-    @TableId(value = "id", type = IdType.INPUT)
+    @TableId(value = "id", type = IdType.UUID)
     private String id;
 
-    @ApiModelProperty(value = "名称")
+    @ApiModelProperty(value = "视频或文件的url")
     /**
-     * 名称
+     * 视频或文件的url
      */
-    private String name;
+    private String imageUrl;
+
+    @ApiModelProperty(value = "商品ID")
+    /**
+     * 商品ID
+     */
+    private String commodityId;
 
 
 }

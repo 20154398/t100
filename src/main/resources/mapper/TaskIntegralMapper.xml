@@ -13,7 +13,7 @@
     <select id="listPageById" resultType="com.ty.t100.vo.IntegralVo">
         select
             ti.create_time as createTime,
-            ti.task_id as taskId,
+            ti.task_id as integralId,
             ti.integral as integral,
             t.title as name,
             0 as integralType

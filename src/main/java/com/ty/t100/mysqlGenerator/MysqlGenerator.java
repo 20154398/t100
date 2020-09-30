@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MysqlGenerator {
-    private static final String[] creatTableList = {"task_integral","commodity_integral"};
+    private static final String[] creatTableList = {"commodity"};
 
     /**
      * RUN THIS
@@ -37,7 +37,7 @@ public class MysqlGenerator {
         // 自定义文件命名，注意 %s 会自动填充表实体属性！
         gc.setMapperName("%sMapper");
         gc.setXmlName("%sMapper");
-        gc.setFileOverride(true);
+        gc.setFileOverride(false);
         gc.setActiveRecord(false);
         // XML 二级缓存
         gc.setEnableCache(false);

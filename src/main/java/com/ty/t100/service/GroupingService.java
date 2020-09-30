@@ -1,6 +1,6 @@
 package com.ty.t100.service;
 
-import com.ty.t100.entity.Group;
+import com.ty.t100.entity.Grouping;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author tang
- * @since 2020-09-15
+ * @since 2020-09-30
  */
-public interface GroupService extends IService<Group> {
+public interface GroupingService extends IService<Grouping> {
 
 }

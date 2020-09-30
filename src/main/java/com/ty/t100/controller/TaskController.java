@@ -133,7 +133,7 @@ public class TaskController {
             @ApiImplicitParam(name = "taskId", value = "任务id", required = true, paramType = "query", dataType = "String"),
     })
     public Result finishTask(String userId, String taskId) {
-        QueryWrapper queryWrapper = new QueryWrapper();
+        QueryWrapper<TaskUser> queryWrapper = new QueryWrapper<TaskUser>();
         Map<String, String> param = new HashMap<>();
         param.put("user_id", userId);
         param.put("task_id", taskId);
@@ -156,10 +156,10 @@ public class TaskController {
     @Transactional
     public Result scoring(String userId, String submitterId, String taskId, Integer integral) {
         User user = userService.getById(userId);
-        if (user.getPower() != 0) {
+        if (!Utils.getInstance().isNull(user) && user.getPower() != 0) {
             throw new BusinessException("没有权限打分");
         }
-        QueryWrapper queryWrapper = new QueryWrapper();
+        QueryWrapper<TaskUser> queryWrapper = new QueryWrapper<>();
         Map<String, String> param = new HashMap<>();
         param.put("user_id", submitterId);
         param.put("task_id", taskId);
