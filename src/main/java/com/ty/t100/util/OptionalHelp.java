@@ -7,6 +7,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 public class OptionalHelp<T> {
     private static final OptionalHelp<?> EMPTY = new OptionalHelp<>();
@@ -17,7 +18,7 @@ public class OptionalHelp<T> {
         this.value = null;
     }
 
-    public static<T> OptionalHelp<T> empty() {
+    public static <T> OptionalHelp<T> empty() {
         @SuppressWarnings("unchecked")
         OptionalHelp<T> t = (OptionalHelp<T>) EMPTY;
         return t;
@@ -47,43 +48,54 @@ public class OptionalHelp<T> {
     }
 
     public void ifPresent(Consumer<? super T> consumer) {
-        if (value != null)
+        if (value != null) {
             consumer.accept(value);
+        }
     }
 
-    public void ifPresentOrElse(Consumer<? super T> consumer, Runnable runnable){
-        if (value != null)
+    public void ifPresentOrElse(Consumer<? super T> consumer, Runnable runnable) {
+        if (value != null) {
             consumer.accept(value);
-        else
+        } else {
             runnable.run();
+        }
     }
 
     public OptionalHelp<T> filter(Predicate<? super T> predicate) {
         Objects.requireNonNull(predicate);
-        if (!isPresent())
+        if (!isPresent()) {
             return this;
-        else
+        } else {
             return predicate.test(value) ? this : empty();
+        }
     }
 
-    public<U> OptionalHelp<U> map(Function<? super T, ? extends U> mapper) {
+    public <U> OptionalHelp<U> map(Function<? super T, ? extends U> mapper) {
         Objects.requireNonNull(mapper);
-        if (!isPresent())
+        if (!isPresent()) {
             return empty();
-        else {
+        } else {
             return OptionalHelp.ofNullable(mapper.apply(value));
         }
     }
 
-    public<U> OptionalHelp<U> flatMap(Function<? super T, OptionalHelp<U>> mapper) {
+    public <U> OptionalHelp<U> flatMap(Function<? super T, OptionalHelp<U>> mapper) {
         Objects.requireNonNull(mapper);
-        if (!isPresent())
+        if (!isPresent()) {
             return empty();
-        else {
+        } else {
             return Objects.requireNonNull(mapper.apply(value));
         }
     }
 
+    @SuppressWarnings("unchecked")
+    public <T> Stream<T> stream() {
+        if (isPresent()) {
+            return (Stream<T>) Stream.of(value);
+        } else {
+            return Stream.empty();
+        }
+    }
 
     public T orElse(T other) {
         return value != null ? value : other;

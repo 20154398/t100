@@ -2,17 +2,12 @@ package com.ty.t100.util;
 
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 
-/**
- * @author Answer.AI.L
- * @date 2019-04-09
- */
 @Slf4j
 @Component
 public class OkHttpCli {

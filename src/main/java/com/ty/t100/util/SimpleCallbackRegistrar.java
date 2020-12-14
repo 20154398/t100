@@ -47,7 +47,7 @@ public class SimpleCallbackRegistrar<T> {
     }
 
     public void notifyCallbacksOnlyChanged(T value) {
-        this.notifyCallbacksOnlyChanged(value, (Comparator) null);
+        this.notifyCallbacksOnlyChanged(value, (Comparator<T>) null);
     }
 
     public void notifyCallbacksOnlyChanged(T value, Comparator<T> comparator) {
@@ -65,9 +65,7 @@ public class SimpleCallbackRegistrar<T> {
         Runnable runnable = () -> callback.accept(value);
         ExecutorService executorService = this.callbacks.get(callback);
         if (executorService != null) {
-            executorService.submit(() -> {
-                runnable.run();
-            });
+            executorService.submit(runnable);
         } else {
             runnable.run();
         }
